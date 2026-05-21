@@ -29,11 +29,12 @@ tasks.withType(JavaCompile) {
 
 ext{
     serenityVersion = '4.3.2'
-    lombokVersion = '1.18.38'
     jacksonVersion = '3.1.2'
     cucumberVersion = '7.34.2'
-    junit = '6.0.3'
     assertjVersion = '3.27.7'
+    jupiterVersion = '6.0.1'
+    logbackVersion = '1.5.6'
+    dataFakerVersion = '2.5.3'
 }
 
 serenity {
@@ -47,12 +48,21 @@ dependencies {
     implementation "net.serenity-bdd:serenity-cucumber:$rootProject.ext.serenityVersion"
     implementation "net.serenity-bdd:serenity-screenplay-rest:$rootProject.ext.serenityVersion"
     implementation "net.serenity-bdd:serenity-reports:$rootProject.ext.serenityVersion"
-    implementation "org.projectlombok:lombok:$rootProject.ext.lombokVersion"
     implementation "tools.jackson.core:jackson-databind:$rootProject.ext.jacksonVersion"
     testImplementation "io.cucumber:cucumber-junit-platform-engine:$rootProject.ext.cucumberVersion"
-    testImplementation "org.junit.platform:junit-platform-suite:$rootProject.ext.junit"
+    testImplementation "org.junit.platform:junit-platform-suite:$rootProject.ext.jupiterVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${jupiterVersion}"
     testImplementation "net.serenity-bdd:serenity-ensure:$rootProject.ext.serenityVersion"
     testImplementation "org.assertj:assertj-core:$rootProject.ext.assertjVersion"
+    testImplementation "ch.qos.logback:logback-classic:$rootProject.ext.logbackVersion"
+    testImplementation "net.datafaker:datafaker:$rootProject.ext.dataFakerVersion"
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
 }
 
 gradle.startParameter.continueOnFailure = true

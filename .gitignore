@@ -1,40 +1,49 @@
-# Gradle  
-.gradle/
-
-# Java
+.gradle
 build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
 out/
-history/ 
+!**/src/main/**/out/
+!**/src/test/**/out/
 
-# Intellij idea
-.idea/
-logs/
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 
-# Serenity 
-target/
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
-# Package files
-*.jar
-
-# Not ingnoring
-!gradle-wrapper.jar
-
-#Logs
-*.log
-
-# Antigravity / IDE específicos
-**/.agent/
-.idea/
+### VS Code ###
 .vscode/
-*.swp
 
-# Evitar ruido para la IA (Contexto)
-node_modules/
-dist/
-build/
+### Mac OS ###
+.DS_Store
+/.idea/
+/target/
+
+### Log Files ###
 *.log
 
-# Seguridad
-.env
-
-.DS_Store
+### Debug Files ###
+debug_auth_error.txt

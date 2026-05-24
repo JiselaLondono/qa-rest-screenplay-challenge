@@ -60,16 +60,6 @@ class TestCreationUser extends BaseTest {
 
         actor.should(
                 seeThat(TheStatusCodeResponse.is(), equalTo(SC_CREATED)),
-                /*
-                 * seeThat("the created user details", act -> userResponse, allOf(
-                 * notNullValue(),
-                 * hasProperty("id", is(notNullValue())),
-                 * hasProperty("name", is(equalTo(userRequest.getName()))),
-                 * hasProperty("email", is(equalTo(userRequest.getEmail()))),
-                 * hasProperty("gender", is(equalTo(userRequest.getGender()))),
-                 * hasProperty("status", is(equalTo(userRequest.getStatus()))))));
-                 */
-
                 seeThat("the created user details", TheResponseBodyUser.obtainedIs(), matchesUserRequest(userRequest)));
     }
 

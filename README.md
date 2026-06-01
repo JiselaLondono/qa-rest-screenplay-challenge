@@ -1,6 +1,6 @@
 # QA REST Screenplay Challenge 🚀
 
-Este es un proyecto de automatización de pruebas para el consumo de servicios REST (API de GoRest), diseñado bajo el patrón **Screenplay** utilizando **Serenity BDD**, **Java**, **JUnit 5**, y **Gradle**.
+Este es un proyecto de automatización de pruebas para el consumo de servicios REST (API de GoRest), diseñado bajo el patrón **Screenplay** utilizando **Serenity BDD**, **Java**, **JUnit 5**, y **Gradle**. Con este proyecto se asume la participación del reto de automatización como propuesta de evaluación técnica realizada por el equipo Strange.
 
 ---
 
@@ -73,8 +73,10 @@ Si deseas formatear manualmente el código, puedes ejecutar:
 
 ## 📊 Reportes de Pruebas
 
-Una vez finalizada la ejecución de las pruebas, Serenity generará un reporte interactivo detallado en formato HTML. Puedes abrirlo desde tu navegador en la siguiente ruta del proyecto:
-
-```
-target/site/serenity/index.html
-```
++ Dado que SerenityBDD se caracteriza por generar reportes detallados que sirven como documentación viva, una vez que se ejecutan los tests, se generará un archivo html llamado index.html, el cual contiene el detalle de la ejecución. Este reporte se presenta en la ruta del proyecto `/target/site/serenity/index.html`. Hay que tener en cuenta que esta ruta se genera cuando se ha presentado la primera ejecución de los tests.
++ Por otro lado tenemos el Serenity Summary Report. Este es un informe de resumen html autónomo de una sola página llamado serenity-summary.html, que contiene una descripción general de los resultados de la prueba. Para generarlo, se debe ejecutar el comando `./gradlew reports`
++ Dentro de la ejecución de los tests de este proyecto, se presentaron resultados exitosos, los cuales se evidencian detalladamente en el reporte o summary de Serenity. Para visualizar esto dentro de este repositorio, por favor dirigirse a la ruta `src/test/resources/results_report`. Aquí se encontrarán 3 documentos de evidencia de la última ejecución realizada:
+  
+  - `last_run_report.pdf`: Screenshots del reporte de Serenity traídos desde el index.html.
+  - `serenity_summary_report.pdf`: Informe de resumen con descripción general de los resultados de los tests, traído desde el serenity-summary.html.
+  - `successful_test_execution.pdf`: Evidencia de los resultados de la ejecución en consola posteriores a ejecución de comando `./gradlew clean test`

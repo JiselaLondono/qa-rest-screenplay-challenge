@@ -9,7 +9,7 @@ import lombok.Data;
 public class UserResponse {
 
     @JsonProperty("id")
-    private int id;
+    private String id;
 
     @JsonProperty("name")
     private String name;
@@ -22,5 +22,4 @@ public class UserResponse {
 
     @JsonProperty("status")
     private String status;
-
 }

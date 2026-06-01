@@ -1,30 +1,39 @@
 package com.qa.challenge.tasks;
 
+import com.qa.challenge.interactions.Delete;
+import com.qa.challenge.utils.Resources;
 import io.restassured.http.ContentType;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
-import net.serenitybdd.screenplay.rest.interactions.Delete;
+import org.apache.http.auth.AUTH;
 
 public class DeleteUser implements Task {
 
-    private final int id;
+    private final String id;
 
-    public DeleteUser(int id) {
+    public DeleteUser(String id) {
         this.id = id;
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(Delete.from("/public/v2/users/" + id).with(request -> request.contentType(ContentType.JSON)
-                .header("Authorization",
-                        "Bearer 703884be07bfe5c321450155ab4a1d71a72dabf83d93d7cba92461292242c66b")));
-
+        actor.attemptsTo(
+                Delete.to(Resources.DELETE_USER.getValue())
+                        .with(
+                                request ->
+                                        request.contentType(ContentType.JSON)
+                                                .pathParam("id", id)
+                                                .header(
+                                                        AUTH.WWW_AUTH_RESP,
+                                                        "Bearer "
+                                                                .concat(
+                                                                        actor.recall(
+                                                                                "API_TOKEN")))));
     }
 
-    public static Performable withData(int id) {
+    public static Performable withData(String id) {
         return Tasks.instrumented(DeleteUser.class, id);
     }
-
 }

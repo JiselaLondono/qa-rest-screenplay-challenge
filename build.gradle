@@ -13,6 +13,7 @@ plugins {
     id 'idea'
     id 'io.freefair.lombok' version '9.2.0'
     id 'net.serenity-bdd.serenity-gradle-plugin' version '4.3.2'
+    id 'com.diffplug.spotless' version '8.2.1'
 }
 
 group 'com.qa.challenge'
@@ -20,11 +21,6 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
-}
-
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
 }
 
 ext{
@@ -37,10 +33,6 @@ ext{
     dataFakerVersion = '2.5.3'
 }
 
-serenity {
-    reports = ["single-page-html"]
-}
-
 dependencies {
     implementation "net.serenity-bdd:serenity-core:$rootProject.ext.serenityVersion"
     implementation "net.serenity-bdd:serenity-junit5:$rootProject.ext.serenityVersion"
@@ -51,11 +43,39 @@ dependencies {
     implementation "tools.jackson.core:jackson-databind:$rootProject.ext.jacksonVersion"
     testImplementation "io.cucumber:cucumber-junit-platform-engine:$rootProject.ext.cucumberVersion"
     testImplementation "org.junit.platform:junit-platform-suite:$rootProject.ext.jupiterVersion"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${jupiterVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$rootProject.ext.jupiterVersion"
     testImplementation "net.serenity-bdd:serenity-ensure:$rootProject.ext.serenityVersion"
     testImplementation "org.assertj:assertj-core:$rootProject.ext.assertjVersion"
     testImplementation "ch.qos.logback:logback-classic:$rootProject.ext.logbackVersion"
     testImplementation "net.datafaker:datafaker:$rootProject.ext.dataFakerVersion"
+}
+
+serenity {
+    reports = ["single-page-html"]
+}
+
+spotless {
+    java {
+        target("src/*/java/**/*.java")
+        googleJavaFormat('1.25.2').aosp()
+        replaceRegex(
+                'SpaceAfterClass',
+                '(?m)^([^\\n]*(?:class|interface|enum|record)[^\\n]*\\{)\\r?\\n(?!\\s*\\r?\\n)',
+                '$1\n\n'
+        )
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+tasks.named('compileJava') {
+    dependsOn 'spotlessApply'
 }
 
 test {

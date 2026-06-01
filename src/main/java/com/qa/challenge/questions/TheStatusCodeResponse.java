@@ -1,9 +1,9 @@
 package com.qa.challenge.questions;
 
+import static net.serenitybdd.rest.SerenityRest.lastResponse;
+
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
-
-import static net.serenitybdd.rest.SerenityRest.lastResponse;
 
 public class TheStatusCodeResponse implements Question<Integer> {
 
@@ -15,5 +15,4 @@ public class TheStatusCodeResponse implements Question<Integer> {
     public static TheStatusCodeResponse is() {
         return new TheStatusCodeResponse();
     }
-
 }

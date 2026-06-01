@@ -1,35 +1,40 @@
 package com.qa.challenge.tasks;
 
+import com.qa.challenge.interactions.Put;
 import com.qa.challenge.models.request.UserRequest;
+import com.qa.challenge.utils.Resources;
 import io.restassured.http.ContentType;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
-import net.serenitybdd.screenplay.rest.interactions.Put;
+import org.apache.http.auth.AUTH;
 
 public class UpdateUser implements Task {
 
     private final UserRequest userRequest;
-    private final int id;
+    private final String id;
 
-    public UpdateUser(UserRequest userRequest, int id) {
+    public UpdateUser(UserRequest userRequest, String id) {
         this.userRequest = userRequest;
         this.id = id;
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(Put.to("/public/v2/users/" + id)
-                .with(request -> request.contentType(ContentType.JSON)
-                        .header("Authorization",
-                                "Bearer 703884be07bfe5c321450155ab4a1d71a72dabf83d93d7cba92461292242c66b")
-                        .body(userRequest)));
-
+        actor.attemptsTo(
+                Put.to(Resources.UPDATE_USER.getValue())
+                        .with(
+                                request ->
+                                        request.contentType(ContentType.JSON)
+                                                .pathParam("id", id)
+                                                .header(
+                                                        AUTH.WWW_AUTH_RESP,
+                                                        "Bearer ".concat(actor.recall("API_TOKEN")))
+                                                .body(userRequest)));
     }
 
-    public static Performable withData(UserRequest userRequest, int id) {
+    public static Performable withData(UserRequest userRequest, String id) {
         return Tasks.instrumented(UpdateUser.class, userRequest, id);
     }
-
 }
